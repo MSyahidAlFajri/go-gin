@@ -42,6 +42,10 @@ func main() {
 	}
 	log.Println("✅ Database migration completed")
 
+	if err := database.DB.AutoMigrate(&models.Product{}); err != nil {
+		log.Fatalf("Failed to migrate Product model: %v", err)
+	}
+
 	// Setup Gin router
 	router := gin.New()
 

@@ -23,11 +23,17 @@ func SetupRoutes(router *gin.Engine) {
 
 		// Protected routes (perlu authentication)
 		protected := v1.Group("/")
-		protected.Use(middlewares.AuthMiddleware()) // Apply auth middleware
+		protected.Use(middlewares.AuthMiddleware())
 		{
-			// User routes
 			protected.GET("/profile", controllers.GetProfile)
 			protected.POST("/auth/refresh", controllers.RefreshToken)
+
+			// CRUD Produk
+			protected.GET("/products", controllers.GetAllProducts)
+			protected.GET("/products/:id", controllers.GetProductByID)
+			protected.POST("/products", controllers.CreateProduct)
+			protected.PUT("/products/:id", controllers.UpdateProduct)
+			protected.DELETE("/products/:id", controllers.DeleteProduct)
 		}
 	}
 
